@@ -1,12 +1,13 @@
 /**
  * @file App.jsx
+ * @module App
  * @description Point d'entrée de l'application SportSee.
  * Configure le routeur de l'application, définit la structure des routes et les fonctions loader associées,
  * puis exporte le composant principal App.
  */
 
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
-import { throwNotFoundResponse } from "./utils/httpResponses";
+import { throwNotFoundResponse } from "./utils/httpResponses.mjs";
 
 import RootLayout from "./Layouts/Root";
 import HomePage from "./pages/Home";
@@ -17,14 +18,18 @@ import UserDataModel from "./models/UserDataModel.mjs";
 
 /**
  * L'URL de base pour l'API.
- * @constant {string}
+ * @constant
+ * @type {string}
+ * @memberof module:App
  */
 const API_BASE_URL = "http://localhost:3000";
 
 /**
  * Configuration du routeur de l'application.
  * Définit la structure des routes, incluant les routes imbriquées et les loaders associés.
- * @constant {import("react-router-dom").Router}
+ * @constant
+ * @type {Router}
+ * @memberof module:App
  */
 const router = createBrowserRouter(
   [
@@ -60,6 +65,7 @@ const router = createBrowserRouter(
  *
  * @async
  * @function userDataLoader
+ * @memberof module:App
  * @param {Object} args - Les arguments de la fonction loader.
  * @param {Object} args.params - Les paramètres de la route.
  * @param {string} args.params.id - L'identifiant de l'utilisateur.
@@ -110,6 +116,7 @@ async function userDataLoader({ params }) {
  * Enveloppe l'application dans un RouterProvider pour activer le routage côté client.
  *
  * @component
+ * @memberof module:App
  * @returns {JSX.Element} Le routeur de l'application.
  */
 function App() {

@@ -1,12 +1,24 @@
 {
+  "plugins": [],
+  "recurseDepth": 5,
   "source": {
     "include": ["src"],
+    "includePattern": ".+\\.(js|jsx|mjs|ts|tsx)$",
     "exclude": ["src/assets"],
-    "includePattern": ".+\\.(js|jsx|ts|tsx)$",
     "excludePattern": "(^|\\/|\\\\)_"
+  },
+  "sourceType": "module",
+  "tags": {
+    "allowUnknownTags": true,
+    "dictionaries": ["jsdoc", "closure"]
+  },
+  "templates": {
+    "cleverLinks": false,
+    "monospaceLinks": false
   },
   "opts": {
     "destination": "./docs",
     "recurse": true
-  }
+  },
+  "access": "all"
 }

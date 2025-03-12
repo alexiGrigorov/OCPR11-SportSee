@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: utils/httpResponses.mjs</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,32 +17,42 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: utils/httpResponses.mjs</h1>
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @file httpResponses.mjs
+ * @module httpResponses
+ * @description Définit les fonctions utilitaires pour renvoyer des réponses HTTP d'erreur.
+ */
 
+/**
+ * Lève une réponse HTTP de type 404.
+ *
+ * Cette fonction lance une instance de {@link Response} indiquant que la page demandée n'a pas été trouvée.
+ * Elle est utilisée notamment dans les loaders pour signaler une erreur "Not Found".
+ *
+ * @function throwNotFoundResponse
+ * @memberof module:httpResponses
+ * @throws {Response} Une réponse HTTP avec le message "Page Not Found", le status 404 et le statusText "Not Found".
+ */
+function throwNotFoundResponse() {
+  throw new Response("Page Not Found", {
+    status: 404,
+    statusText: "Not Found",
+  });
+}
 
-    <h3> </h3>
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
+export { throwNotFoundResponse };
+</code></pre>
+        </article>
+    </section>
 
 
 
