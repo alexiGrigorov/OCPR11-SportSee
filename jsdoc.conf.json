@@ -1,0 +1,12 @@
+{
+  "source": {
+    "include": ["src"],
+    "exclude": ["src/assets"],
+    "includePattern": ".+\\.(js|jsx|ts|tsx)$",
+    "excludePattern": "(^|\\/|\\\\)_"
+  },
+  "opts": {
+    "destination": "./docs",
+    "recurse": true
+  }
+}

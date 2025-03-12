@@ -1,0 +1,45 @@
+{
+  "name": "ocpr11-sportsee",
+  "version": "1.0.0",
+  "description": "Développez un tableau de bord d'analytics avec React",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "format": "prettier --write \"src/**/*.{html,css,js,jsx,ts,tsx}\"",
+    "lint": "eslint",
+    "dev": "vite",
+    "build": "vite build",
+    "postbuild": "cp dist/index.html dist/404.html",
+    "preview": "vite preview",
+    "deploy": "npm run build && git add -f dist && git commit -m \"Deploy commit\" && git subtree push --prefix dist origin gh-pages",
+    "backend": "node backend/app/index.js",
+    "docs": "jsdoc -c jsdoc.conf.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexiGrigorov/OCPR11-SportSee.git"
+  },
+  "author": "Alexi GRIGOROV",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alexiGrigorov/OCPR11-SportSee/issues"
+  },
+  "homepage": "https://github.com/alexiGrigorov/OCPR11-SportSee",
+  "dependencies": {
+    "d3": "^7.9.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-router-dom": "^7.3.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.10",
+    "@types/react-dom": "^19.0.4",
+    "@vitejs/plugin-react": "^4.3.4",
+    "eslint": "^9.22.0",
+    "eslint-config-prettier": "^10.1.1",
+    "eslint-plugin-react": "^7.37.4",
+    "jsdoc": "^4.0.4",
+    "prettier": "^3.5.3",
+    "vite": "^6.2.1"
+  }
+}
