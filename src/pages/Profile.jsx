@@ -1,8 +1,10 @@
 import { useLoaderData } from "react-router-dom";
-import ScoreChart from "../components/ScoreChart";
-import RadarPerformanceChart from "../components/RadarPerformanceChart";
-import SessionDurationChart from "../components/SessionDurationChart";
-import DailyActivityChart from "../components/DailyActivityChart";
+import ScoreChart from "../ui/ScoreChart";
+import RadarPerformanceChart from "../ui/RadarPerformanceChart";
+import SessionDurationChart from "../ui/SessionDurationChart";
+import DailyActivityChart from "../ui/DailyActivityChart";
+
+import SvgTest from "../components/SvgTest";
 
 function Profile() {
   const userData = useLoaderData();
@@ -48,6 +50,10 @@ function Profile() {
 
       <section id="activity">
         <DailyActivityChart data={userData.activity} />
+      </section>
+
+      <section id="svg">
+        <SvgTest />
       </section>
     </div>
   );
