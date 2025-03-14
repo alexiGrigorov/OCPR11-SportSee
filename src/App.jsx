@@ -7,22 +7,15 @@
  */
 
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
+
+import ApiService from "./services/apiService.mjs";
 import { throwNotFoundResponse } from "./utils/httpResponses.mjs";
+import UserDataModel from "./models/UserDataModel.mjs";
 
 import RootLayout from "./Layouts/Root";
 import HomePage from "./pages/Home";
 import ErrorPage from "./pages/Error";
 import ProfilePage from "./pages/Profile";
-
-import UserDataModel from "./models/UserDataModel.mjs";
-
-/**
- * L'URL de base pour l'API.
- * @constant
- * @type {string}
- * @memberof module:App
- */
-const API_BASE_URL = "http://localhost:3000";
 
 /**
  * Configuration du routeur de l'application.
@@ -74,41 +67,24 @@ const router = createBrowserRouter(
  */
 async function userDataLoader({ params }) {
   const userId = params.id;
+  const apiService = new ApiService();
 
-  const requests = [
-    { name: "user", url: `${API_BASE_URL}/user/${userId}` },
-    { name: "activity", url: `${API_BASE_URL}/user/${userId}/activity` },
-    {
-      name: "averageSessions",
-      url: `${API_BASE_URL}/user/${userId}/average-sessions`,
-    },
-    { name: "performance", url: `${API_BASE_URL}/user/${userId}/performance` },
-  ];
+  try {
+    // Execute API calls concurrently
+    const [user, activity, averageSessions, performance] = await Promise.all([
+      apiService.getUser(userId),
+      apiService.getActivity(userId),
+      apiService.getAverageSessions(userId),
+      apiService.getPerformance(userId),
+    ]);
 
-  // Exécute toutes les requêtes API simultanément.
-  const responses = await Promise.all(requests.map((req) => fetch(req.url)));
-
-  // Vérifie chaque réponse : si une requête échoue, affiche l'erreur et lève une réponse 404.
-  for (const [index, res] of responses.entries()) {
-    if (!res.ok) {
-      console.error(
-        `Request for ${requests[index].name} user failed with status ${res.status}`,
-      );
-      throwNotFoundResponse();
-    }
+    // Combine results into one object to create the UserDataModel instance
+    const data = { user, activity, averageSessions, performance };
+    return new UserDataModel(data);
+  } catch (error) {
+    console.error("API call error:", error);
+    throwNotFoundResponse();
   }
-
-  // Parse toutes les réponses en JSON simultanément.
-  const results = await Promise.all(responses.map((res) => res.json()));
-
-  // Regroupe les résultats dans un objet indexé par le nom de chaque requête.
-  const data = requests.reduce((acc, req, index) => {
-    acc[req.name] = results[index];
-    return acc;
-  }, {});
-
-  // Retourne une nouvelle instance de UserDataModel avec les données standardisées.
-  return new UserDataModel(data);
 }
 
 /**
