@@ -1,61 +1,54 @@
 import { useLoaderData } from "react-router-dom";
-import ScoreChart from "../ui/ScoreChart";
-import RadarPerformanceChart from "../ui/RadarPerformanceChart";
-import SessionDurationChart from "../ui/SessionDurationChart";
-import DailyActivityChart from "../ui/DailyActivityChart";
 
-import SvgTest from "../components/SvgTest";
+import CaloriesCounter from "../components/indicators/CaloriesCounter";
+import ProteinsCounter from "../components/indicators/ProteinsCounter";
+import CarbohydratesCounter from "../components/indicators/CarbohydratesCounter";
+import LipidsCounter from "../components/indicators/LipidsCounter";
+import ScoreChart from "../components/indicators/ScoreChart";
+import RadarPerformanceChart from "../components/indicators/RadarPerformanceChart";
+import SessionDurationChart from "../components/indicators/SessionDurationChart";
+import DailyActivityChart from "../components/indicators/DailyActivityChart";
 
 function Profile() {
   const userData = useLoaderData();
   console.log(userData);
 
   return (
-    <div>
-      <section id="user">
-        <h1>Bonjour {userData.user.firstName}</h1>
-        <p>Félicitation ! Vous avez explosé vos objectifs hier 👏</p>
-      </section>
+    <main className="area-main px-27 py-17">
+      <h1 className="my-10 text-5xl font-medium">
+        Bonjour <span className="text-primary">{userData.user.firstName}</span>
+      </h1>
+      <p className="text-lg">
+        Félicitation ! Vous avez explosé vos objectifs hier 👏
+      </p>
 
-      <section id="counts">
-        <div>
-          <h2>Calories</h2>
-          <p>{userData.counts.calorie}kCal</p>
+      <section className="layout-indicators grid gap-7">
+        <div className="area-calories">
+          <CaloriesCounter value={userData.counts.calories} />
         </div>
-        <div>
-          <h2>Protéines</h2>
-          <p>{userData.counts.protein}g</p>
+        <div className="area-proteins">
+          <ProteinsCounter value={userData.counts.proteins} />
         </div>
-        <div>
-          <h2>Glucides</h2>
-          <p>{userData.counts.carbohydrate}g</p>
+        <div className="area-carbohydrates">
+          <CarbohydratesCounter value={userData.counts.carbohydrates} />
         </div>
-        <div>
-          <h2>Lipides</h2>
-          <p>{userData.counts.lipid}g</p>
+        <div className="area-lipids">
+          <LipidsCounter value={userData.counts.lipids} />
+        </div>
+        <div className="area-today-score">
+          <ScoreChart percentage={userData.todayScore} size={200} />
+        </div>
+        <div className="area-performance">
+          <RadarPerformanceChart data={userData.performance} />
+        </div>
+        <div className="area-avarage-sessions">
+          <SessionDurationChart data={userData.avarageSessions} />
+        </div>
+        <div className="area-daily-activity">
+          <DailyActivityChart data={userData.dailyActivity} />
         </div>
       </section>
-
-      <section id="todayScore">
-        <ScoreChart percentage={userData.todayScore} size={200} />
-      </section>
-
-      <section id="performance">
-        <RadarPerformanceChart data={userData.performance} />
-      </section>
-
-      <section id="avarageSessions">
-        <SessionDurationChart data={userData.avarageSessions} />
-      </section>
-
-      <section id="activity">
-        <DailyActivityChart data={userData.activity} />
-      </section>
-
-      <section id="svg">
-        <SvgTest />
-      </section>
-    </div>
+    </main>
   );
 }
 

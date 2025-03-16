@@ -9,10 +9,10 @@ class UserDataModel {
   todayScore = null;
 
   counts = {
-    calorie: null,
-    carbohydrate: null,
-    lipid: null,
-    protein: null,
+    calories: null,
+    carbohydrates: null,
+    lipids: null,
+    proteins: null,
   };
 
   performance = [];
@@ -30,10 +30,10 @@ class UserDataModel {
 
     this.todayScore = data.user.data.score ?? data.user.data.todayScore;
 
-    this.counts.calorie = data.user.data.keyData.calorieCount;
-    this.counts.carbohydrate = data.user.data.keyData.carbohydrateCount;
-    this.counts.lipid = data.user.data.keyData.lipidCount;
-    this.counts.protein = data.user.data.keyData.proteinCount;
+    this.counts.calories = data.user.data.keyData.calorieCount;
+    this.counts.carbohydrates = data.user.data.keyData.carbohydrateCount;
+    this.counts.lipids = data.user.data.keyData.lipidCount;
+    this.counts.proteins = data.user.data.keyData.proteinCount;
 
     this.performance = data.performance.data.data.map((item) => ({
       kind: data.performance.data.kind[item.kind],
@@ -45,7 +45,7 @@ class UserDataModel {
       sessionLength: item.sessionLength,
     }));
 
-    this.activity = data.activity.data.sessions.map((item) => ({
+    this.dailyActivity = data.activity.data.sessions.map((item) => ({
       day: item.day,
       kilogram: item.kilogram,
       calories: item.calories,

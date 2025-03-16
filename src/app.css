@@ -1,0 +1,87 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 100 900;
+  font-stretch: 100%;
+  src: url("./assets/fonts/Roboto.woff2") format("woff2");
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+    U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212,
+    U+2215, U+FEFF, U+FFFD;
+}
+
+@theme {
+  --color-primary: #ff0101;
+  --color-primary-tint: #ffeded;
+  --color-proteins: #4ab8ff;
+  --color-proteins-tint: #edf8ff;
+  --color-carbohydrates: #fdcc0c;
+  --color-carbohydrates-tint: #fefae9;
+  --color-lipids: #fd5181;
+  --color-lipids-tint: #ffeef2;
+  --color-label: #74798c;
+  --font-sans: "Roboto", sans-serif;
+}
+
+@layer utilities {
+  .layout-root {
+    grid-template:
+      "header header" auto
+      "aside main " 1fr
+      / auto 1fr;
+  }
+  .area-header {
+    grid-area: header;
+  }
+  .area-aside {
+    grid-area: aside;
+  }
+  .area-main {
+    grid-area: main;
+  }
+  .area-footer {
+    grid-area: footer;
+  }
+
+  .vertical-text {
+    writing-mode: vertical-rl;
+    text-orientation: sideways;
+    transform: rotate(180deg);
+  }
+
+  .layout-indicators {
+    grid-template:
+      "daily-activity daily-activity daily-activity calories"
+      "daily-activity daily-activity daily-activity proteins"
+      "avarage-sessions performance today-score carbohydrates"
+      "avarage-sessions performance today-score lipids"
+      / 1fr 1fr 1fr 1fr;
+  }
+
+  .area-daily-activity {
+    grid-area: daily-activity;
+  }
+  .area-avarage-sessions {
+    grid-area: avarage-sessions;
+  }
+  .area-performance {
+    grid-area: performance;
+  }
+  .area-today-score {
+    grid-area: today-score;
+  }
+  .area-calories {
+    grid-area: calories;
+  }
+  .area-proteins {
+    grid-area: proteins;
+  }
+  .area-carbohydrates {
+    grid-area: carbohydrates;
+  }
+  .area-lipids {
+    grid-area: lipids;
+  }
+}

@@ -1,9 +1,20 @@
+import { Link } from "react-router-dom";
+
 function Home() {
   return (
-    <div>
-      <h1>Home</h1>
-      <p>go to user/12 or user/18</p>
-    </div>
+    <main className="area-main px-27 py-17">
+      <h1 className="my-10 text-5xl font-medium">Accueil</h1>
+      <p className="text-lg">
+        Pour un exemple avec des données dynamiques, consultez les sites pages{" "}
+        <Link className="text-primary" to={"/user/12"}>
+          user/12
+        </Link>{" "}
+        ou{" "}
+        <Link className="text-primary" to={"/user/18"}>
+          user/18
+        </Link>
+      </p>
+    </main>
   );
 }
 

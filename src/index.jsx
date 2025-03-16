@@ -8,6 +8,7 @@
 
 import { createRoot } from "react-dom/client";
 import App from "./App";
+import "./app.css";
 
 /**
  *Récupère l'élément racine du DOM.
