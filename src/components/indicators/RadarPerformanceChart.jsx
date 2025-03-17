@@ -8,8 +8,6 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-// Optional dictionary to map your `kind` property into labels (French or otherwise).
-// If a data item’s `kind` isn’t found here, we’ll just display the original kind.
 const kindLabels = {
   intensity: "Intensité",
   speed: "Vitesse",
@@ -19,7 +17,6 @@ const kindLabels = {
   cardio: "Cardio",
 };
 
-// Define the order in which you want the axes to appear around the radar.
 const displayOrder = [
   "intensity",
   "speed",
@@ -33,43 +30,27 @@ function sortByDisplayOrder(a, b) {
   return displayOrder.indexOf(a.kind) - displayOrder.indexOf(b.kind);
 }
 
-const RadarPerformanceChart = ({ data }) => {
-  // 1) Sort and transform the incoming data.
-  //    - Sort by our desired order (above)
-  //    - Convert each item to { subject: "...", value: ... } for Recharts
+const RadarPerformanceChart = ({ data, className, ...props }) => {
   const preparedData = [...data].sort(sortByDisplayOrder).map((item) => ({
     subject: kindLabels[item.kind] ?? item.kind,
     value: item.value,
   }));
 
-  // 2) Dynamically determine the max domain for the radial axis
-  //    so your radar fully accommodates the highest value.
   const maxValue = Math.max(...data.map((d) => d.value)) || 1;
 
-  // 3) Render the chart with a dark background and a red radar fill, similar to your screenshot.
   return (
     <div
-      style={{
-        width: "300px",
-        height: "300px",
-        backgroundColor: "#2F2F2F", // dark gray
-        borderRadius: "10px",
-        padding: "1rem",
-      }}
+      className={`${className} aspect-square rounded-sm bg-neutral-800 p-8`}
+      {...props}
     >
       <ResponsiveContainer>
         <RadarChart data={preparedData} outerRadius="70%">
-          <PolarGrid
-            stroke="#FFFFFF"
-            radialLines={false} // Toggle if you want radial lines or not
-          />
+          <PolarGrid stroke="#FFFFFF" radialLines={false} />
           <PolarAngleAxis
             dataKey="subject"
             stroke="#FFFFFF"
             tickLine={false}
             axisLine={false}
-            // Optional styling if needed:
-            // tick={{ fontSize: 12, fill: "#FFFFFF" }}
           />
           <PolarRadiusAxis
             domain={[0, maxValue]}

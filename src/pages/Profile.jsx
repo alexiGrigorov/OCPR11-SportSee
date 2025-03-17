@@ -18,34 +18,33 @@ function Profile() {
       <h1 className="my-10 text-5xl font-medium">
         Bonjour <span className="text-primary">{userData.user.firstName}</span>
       </h1>
-      <p className="text-lg">
+      <p className="mb-19 text-lg">
         Félicitation ! Vous avez explosé vos objectifs hier 👏
       </p>
 
       <section className="layout-indicators grid gap-7">
-        <div className="area-calories">
+        <DailyActivityChart
+          data={userData.dailyActivity}
+          className="area-daily-activity"
+        />
+
+        <SessionDurationChart
+          data={userData.avarageSessions}
+          className="area-avarage-sessions"
+        />
+
+        <RadarPerformanceChart
+          data={userData.performance}
+          className="area-performance"
+        />
+
+        <ScoreChart data={userData.todayScore} className="area-today-score" />
+
+        <div className="area-counters flex flex-col justify-between">
           <CaloriesCounter value={userData.counts.calories} />
-        </div>
-        <div className="area-proteins">
           <ProteinsCounter value={userData.counts.proteins} />
-        </div>
-        <div className="area-carbohydrates">
           <CarbohydratesCounter value={userData.counts.carbohydrates} />
-        </div>
-        <div className="area-lipids">
           <LipidsCounter value={userData.counts.lipids} />
-        </div>
-        <div className="area-today-score">
-          <ScoreChart percentage={userData.todayScore} size={200} />
-        </div>
-        <div className="area-performance">
-          <RadarPerformanceChart data={userData.performance} />
-        </div>
-        <div className="area-avarage-sessions">
-          <SessionDurationChart data={userData.avarageSessions} />
-        </div>
-        <div className="area-daily-activity">
-          <DailyActivityChart data={userData.dailyActivity} />
         </div>
       </section>
     </main>

@@ -7,83 +7,87 @@ import {
   Tooltip,
   ResponsiveContainer,
   CartesianGrid,
+  Legend,
 } from "recharts";
 
-// Map day numbers (1...7) to French labels:
-// L (lundi), M (mardi), M (mercredi), J (jeudi), V (vendredi), S (samedi), D (dimanche)
 const dayLabels = ["L", "M", "M", "J", "V", "S", "D"];
 
-// A custom Tooltip to display the session length as “NN min”
-const CustomTooltip = ({ active, payload }) => {
+const CustomCursor = ({ left, top, width, height, points }) => {
+  if (!points || points.length === 0) return null;
+
+  const hoverX = points[0].x;
+  const chartRight = left + width;
+
+  const rectWidth = chartRight - hoverX;
+
+  return (
+    <g>
+      <rect
+        x={hoverX}
+        y={0}
+        width={rectWidth}
+        height={height * 3}
+        fill="black"
+        opacity="0.1"
+      />
+    </g>
+  );
+};
+
+const CustomTooltip = ({ active, payload, coordinate }) => {
   if (active && payload && payload.length) {
     return (
-      <div
-        style={{
-          background: "#FFFFFF",
-          color: "#000000",
-          padding: "6px 12px",
-          borderRadius: 4,
-        }}
-      >
-        {`${payload[0].value} min`}
+      <div>
+        <div
+          className="text-medium pointer-events-none absolute bg-white p-2 text-xs whitespace-nowrap"
+          style={{
+            left: coordinate.x + 15,
+            top: coordinate.y - 15,
+          }}
+        >
+          {`${payload[0].value} min`}
+        </div>
       </div>
     );
   }
   return null;
 };
 
-const SessionDurationChart = ({ data }) => {
+const CustomLegend = ({ payload }) => {
   return (
-    // Container for styling (red background, padding, etc.)
-    <div
-      style={{
-        width: "300px",
-        height: "300px",
-        backgroundColor: "#FF0101", // red background
-        borderRadius: "8px",
-        position: "relative",
-        padding: "1rem",
-      }}
-    >
-      {/* Chart title overlaid in the corner */}
-      <div
-        style={{
-          position: "absolute",
-          top: "10px",
-          left: "10px",
-          color: "rgba(255,255,255,0.8)",
-          fontSize: "14px",
-        }}
-      >
-        Durée moyenne des sessions
-      </div>
+    <h3 className="text-medium text-base text-white opacity-50">
+      Durée moyenne des <br /> sessions
+    </h3>
+  );
+};
 
+const SessionDurationChart = ({ data, className, ...props }) => {
+  return (
+    <div
+      className={`${className} bg-primary aspect-square rounded-sm p-8`}
+      {...props}
+    >
       <ResponsiveContainer>
-        <LineChart
-          data={data}
-          margin={{ top: 40, right: 10, left: 10, bottom: 10 }}
-        >
-          {/* Hide the grid lines to mimic your screenshot’s clean look */}
+        <LineChart data={data}>
+          <Legend verticalAlign="top" height={50} content={<CustomLegend />} />
           <CartesianGrid
             strokeDasharray="3 3"
             vertical={false}
             horizontal={false}
           />
 
-          {/* X‐axis with custom day labels */}
           <XAxis
             dataKey="day"
             axisLine={false}
             tickLine={false}
-            stroke="#ffffff"
             tick={({ x, y, payload }) => {
-              const dayIndex = payload.value - 1; // day starts at 1
+              const dayIndex = payload.value - 1;
               return (
                 <text
                   x={x}
-                  y={y + 10} // move label down a bit
+                  y={y + 20}
                   textAnchor="middle"
-                  fill="rgba(255,255,255,0.8)"
+                  fill="rgba(255,255,255,0.5)"
                   style={{ fontSize: "12px" }}
                 >
                   {dayLabels[dayIndex]}
@@ -92,20 +96,14 @@ const SessionDurationChart = ({ data }) => {
             }}
           />
 
-          {/* Hide the Y‐axis. If you need it, you can show or customize it. */}
           <YAxis hide />
 
-          {/* Tooltip for hovering (show “NN min”) */}
-          <Tooltip
-            content={<CustomTooltip />}
-            cursor={{ stroke: "rgba(255,255,255,0.3)", strokeWidth: 1 }}
-          />
+          <Tooltip content={<CustomTooltip />} cursor={<CustomCursor />} />
 
-          {/* Smooth white line, no dots except the active dot on hover */}
           <Line
             type="monotone"
             dataKey="sessionLength"
-            stroke="#ffffff"
+            stroke="rgba(255,255,255, 0.6)"
             strokeWidth={2}
             dot={false}
             activeDot={{

@@ -53,10 +53,8 @@
 
   .layout-indicators {
     grid-template:
-      "daily-activity daily-activity daily-activity calories"
-      "daily-activity daily-activity daily-activity proteins"
-      "avarage-sessions performance today-score carbohydrates"
-      "avarage-sessions performance today-score lipids"
+      "daily-activity daily-activity daily-activity counters" 1fr
+      "avarage-sessions performance today-score counters" 1fr
       / 1fr 1fr 1fr 1fr;
   }
 
@@ -72,16 +70,7 @@
   .area-today-score {
     grid-area: today-score;
   }
-  .area-calories {
-    grid-area: calories;
-  }
-  .area-proteins {
-    grid-area: proteins;
-  }
-  .area-carbohydrates {
-    grid-area: carbohydrates;
-  }
-  .area-lipids {
-    grid-area: lipids;
+  .area-counters {
+    grid-area: counters;
   }
 }

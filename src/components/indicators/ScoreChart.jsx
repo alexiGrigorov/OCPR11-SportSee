@@ -13,10 +13,10 @@ import {
  * @param {number} percentage - A number between 0 and 1 representing the fraction filled (e.g., 0.12 for 12%).
  * @param {number} [size=200] - The width and height (in px) of the chart container.
  */
-function ScoreChart({ percentage = 0.12, size = 200 }) {
+function ScoreChart({ data, className, ...props }) {
   // Recharts expects a data array. We'll just have one data point.
-  const dataValue = percentage * 100; // convert 0.12 => 12
-  const data = [
+  const dataValue = data * 100; // convert 0.12 => 12
+  const score = [
     { name: "Score", value: dataValue, fill: "#FF0000" }, // red arc
   ];
 
@@ -63,7 +63,10 @@ function ScoreChart({ percentage = 0.12, size = 200 }) {
    * - clockWise={false}: For a negative sweep (counterclockwise).
    */
   return (
-    <div style={{ width: size, height: size }}>
+    <div
+      className={`${className} aspect-square rounded-sm bg-neutral-50 p-8`}
+      {...props}
+    >
       <ResponsiveContainer width="100%" height="100%">
         <RadialBarChart
           cx="50%"
@@ -73,7 +76,7 @@ function ScoreChart({ percentage = 0.12, size = 200 }) {
           barSize={10}
           startAngle={90}
           endAngle={450} // fill counterclockwise from top
-          data={data}
+          data={score}
         >
           {/* Hide the default axis/ticks; just define the domain */}
           <PolarAngleAxis type="number" domain={[0, 100]} tick={false} />
