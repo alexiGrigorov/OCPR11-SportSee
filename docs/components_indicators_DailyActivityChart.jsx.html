@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/indicators/DailyActivityChart.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/indicators/DailyActivityChart.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @file DailyActivityChart.jsx
+ * @module DailyActivityChart
+ * @description Composant de graphique représentant l'activité quotidienne de l'utilisateur.
+ * Ce composant utilise la bibliothèque Recharts pour afficher un graphique en barres avec deux axes :
+ * un axe pour le poids (kilogrammes) et un axe pour les calories brûlées.
+ * Des composants personnalisés (CustomTooltip et CustomLegend) sont intégrés pour améliorer la lisibilité
+ * et l'expérience utilisateur.
+ */
+
+import React from "react";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
+
+/**
+ * Composant d'infobulle personnalisé pour le graphique.
+ *
+ * Affiche le poids et les calories brûlées dans une infobulle positionnée dynamiquement.
+ *
+ * @component
+ * @memberof module:DailyActivityChart
+ * @param {Object} props - Les propriétés de l'infobulle.
+ * @param {boolean} props.active - Indique si l'infobulle doit être affichée.
+ * @param {Array} props.payload - Les données associées au point survolé.
+ * @param {Object} props.coordinate - Les coordonnées { x, y } pour positionner l'infobulle.
+ * @returns {JSX.Element|null} L'infobulle personnalisée ou null si inactif.
+ */
+const CustomTooltip = ({ active, payload, coordinate }) => {
+  if (active &amp;&amp; payload &amp;&amp; payload.length === 2) {
+    const kg = payload[0].value;
+    const kcal = payload[1].value;
+    return (
+      &lt;div
+        className="bg-primary pointer-events-none absolute flex flex-col items-center gap-3.5 p-2 text-xs font-medium text-white"
+        style={{
+          left: coordinate.x + 20,
+          top: coordinate.y - 50,
+        }}
+      >
+        &lt;div>{`${kg}kg`}&lt;/div>
+        &lt;div>{`${kcal}kCal`}&lt;/div>
+      &lt;/div>
+    );
+  }
+  return null;
+};
+
+/**
+ * Composant de légende personnalisé pour le graphique.
+ *
+ * Affiche le titre du graphique et une légende avec des indicateurs colorés pour le poids et les calories.
+ *
+ * @component
+ * @memberof module:DailyActivityChart
+ * @param {Object} props - Les propriétés de la légende.
+ * @param {Array} props.payload - Les entrées de légende fournies par Recharts.
+ * @returns {JSX.Element} Le rendu de la légende personnalisée.
+ */
+const CustomLegend = ({ payload }) => {
+  const DOT_SIZE = 8;
+
+  return (
+    &lt;div className="flex items-center justify-between">
+      &lt;h3 className="text-base font-medium">Activité quotidienne&lt;/h3>
+      &lt;div className="flex flex-row items-center gap-8">
+        {payload?.map((entry, index) => (
+          &lt;div
+            key={`legend-item-${index}`}
+            className="flex items-center gap-2.5"
+          >
+            &lt;svg width={DOT_SIZE} height={DOT_SIZE} style={{ marginRight: 8 }}>
+              &lt;circle
+                cx={DOT_SIZE / 2}
+                cy={DOT_SIZE / 2}
+                r={DOT_SIZE / 2}
+                fill={entry.color}
+              />
+            &lt;/svg>
+            &lt;span className="text-label">
+              {entry.value === "kilogram"
+                ? "Poids (kg)"
+                : "Calories brûlées (kCal)"}
+            &lt;/span>
+          &lt;/div>
+        ))}
+      &lt;/div>
+    &lt;/div>
+  );
+};
+
+/**
+ * Composant DailyActivityChart.
+ *
+ * Ce composant traite les données d'activité quotidienne et les affiche dans un graphique en barres.
+ * Chaque barre représente les calories brûlées et le poids de l'utilisateur sur une journée donnée.
+ * Les axes sont configurés dynamiquement en fonction des valeurs minimales et maximales des données.
+ *
+ * @component
+ * @memberof module:DailyActivityChart
+ * @param {Object} props - Les propriétés du composant.
+ * @param {Array&lt;Object>} props.data - Le tableau des données d'activité quotidienne.
+ *        Chaque objet doit contenir au moins les clés "day", "kilogram" et "calories".
+ * @param {string} [props.className=""] - Classes CSS supplémentaires à appliquer au conteneur du graphique.
+ * @param {Object} [props.rest] - Autres propriétés HTML à appliquer au conteneur.
+ * @returns {JSX.Element} Le rendu du graphique d'activité quotidienne.
+ */
+function DailyActivityChart({ data, className, ...props }) {
+  // Traiter les données pour extraire l'indice du jour à partir de la date
+  const processedData = data.map((item) => {
+    const dateObj = new Date(item.day);
+    const dayIndex = dateObj.getDate();
+    return {
+      ...item,
+      dayIndex,
+    };
+  });
+
+  // Déterminer les domaines pour les axes
+  const maxCal = Math.max(...processedData.map((d) => d.calories));
+  const minKg = Math.min(...processedData.map((d) => d.kilogram));
+  const maxKg = Math.max(...processedData.map((d) => d.kilogram));
+
+  return (
+    &lt;div
+      className={`${className} aspect-3/1 rounded-sm bg-neutral-50 p-4`}
+      {...props}
+    >
+      &lt;ResponsiveContainer width="100%">
+        &lt;BarChart data={processedData} barGap={8}>
+          &lt;Legend verticalAlign="top" height={50} content={&lt;CustomLegend />} />
+
+          &lt;XAxis
+            dataKey="dayIndex"
+            tickLine={false}
+            axisLine={false}
+            tick={{ fill: "#9B9EAC", fontSize: 14, fontWeight: 500 }}
+          />
+
+          &lt;YAxis
+            yAxisId="calories"
+            dataKey="calories"
+            hide={true}
+            domain={[0, maxCal + 50]}
+          />
+
+          &lt;YAxis
+            yAxisId="kilogram"
+            dataKey="kilogram"
+            orientation="right"
+            axisLine={false}
+            tickLine={false}
+            tick={{ fill: "#9B9EAC", fontSize: 14, fontWeight: 500 }}
+            domain={[minKg - 2, maxKg + 1]}
+          />
+
+          &lt;CartesianGrid
+            strokeDasharray="3 3"
+            stroke="#DEDEDE"
+            vertical={false}
+          />
+
+          &lt;Tooltip cursor={true} content={&lt;CustomTooltip />} />
+
+          &lt;Bar
+            yAxisId="kilogram"
+            dataKey="kilogram"
+            name="kilogram"
+            radius={[3, 3, 0, 0]}
+            barSize={7}
+          />
+
+          &lt;Bar
+            yAxisId="calories"
+            dataKey="calories"
+            fill="var(--color-primary)"
+            name="calories"
+            radius={[3, 3, 0, 0]}
+            barSize={7}
+          />
+        &lt;/BarChart>
+      &lt;/ResponsiveContainer>
+    &lt;/div>
+  );
+}
+
+export default DailyActivityChart;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-App.html">App</a></li><li><a href="module-CaloriesCounter.html">CaloriesCounter</a></li><li><a href="module-CarbohydratesCounter.html">CarbohydratesCounter</a></li><li><a href="module-DailyActivityChart.html">DailyActivityChart</a></li><li><a href="module-Error.html">Error</a></li><li><a href="module-Home.html">Home</a></li><li><a href="module-IconCalories.html">IconCalories</a></li><li><a href="module-IconCarbohydrates.html">IconCarbohydrates</a></li><li><a href="module-IconCycling.html">IconCycling</a></li><li><a href="module-IconLipids.html">IconLipids</a></li><li><a href="module-IconMeditating.html">IconMeditating</a></li><li><a href="module-IconProteins.html">IconProteins</a></li><li><a href="module-IconSwimming.html">IconSwimming</a></li><li><a href="module-IconWeightlifting.html">IconWeightlifting</a></li><li><a href="module-LipidsCounter.html">LipidsCounter</a></li><li><a href="module-MainAside.html">MainAside</a></li><li><a href="module-MainHeader.html">MainHeader</a></li><li><a href="module-ProteinsCounter.html">ProteinsCounter</a></li><li><a href="module-RadarPerformanceChart.html">RadarPerformanceChart</a></li><li><a href="module-Root.html">Root</a></li><li><a href="module-ScoreChart.html">ScoreChart</a></li><li><a href="module-SessionDurationChart.html">SessionDurationChart</a></li><li><a href="module-SiteLogo.html">SiteLogo</a></li><li><a href="module-SvgIcon.html">SvgIcon</a></li><li><a href="module-UserDataModel.html">UserDataModel</a></li><li><a href="module-apiService.html">apiService</a></li><li><a href="module-httpResponses.html">httpResponses</a></li><li><a href="module-index.html">index</a></li></ul><h3>Classes</h3><ul><li><a href="module-UserDataModel.UserDataModel.html">UserDataModel</a></li><li><a href="module-UserDataModel-UserDataModel.html">UserDataModel</a></li><li><a href="module-apiService.ApiService.html">ApiService</a></li><li><a href="module-apiService-ApiService.html">ApiService</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Tue Mar 18 2025 11:39:08 GMT+0100 (Central European Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

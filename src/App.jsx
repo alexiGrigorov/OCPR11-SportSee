@@ -20,8 +20,9 @@ import ProfilePage from "./pages/Profile";
 /**
  * Configuration du routeur de l'application.
  * Définit la structure des routes, incluant les routes imbriquées et les loaders associés.
+ *
  * @constant
- * @type {Router}
+ * @type {import("react-router-dom").Router}
  * @memberof module:App
  */
 const router = createBrowserRouter(
@@ -47,7 +48,7 @@ const router = createBrowserRouter(
     },
   ],
   {
-    basename: "/OCPR11-SportSee",
+    basename: "/OCPR11-SportSee", // Préfixe de toutes les routes de l'application
   },
 );
 
@@ -70,7 +71,7 @@ async function userDataLoader({ params }) {
   const apiService = new ApiService();
 
   try {
-    // Execute API calls concurrently
+    // Exécute les appels API en parallèle pour améliorer la performance
     const [user, activity, averageSessions, performance] = await Promise.all([
       apiService.getUser(userId),
       apiService.getActivity(userId),
@@ -78,11 +79,11 @@ async function userDataLoader({ params }) {
       apiService.getPerformance(userId),
     ]);
 
-    // Combine results into one object to create the UserDataModel instance
+    // Combine les résultats dans un objet unique pour créer l'instance de UserDataModel
     const data = { user, activity, averageSessions, performance };
     return new UserDataModel(data);
   } catch (error) {
-    console.error("API call error:", error);
+    console.error("Erreur lors de l'appel API :", error);
     throwNotFoundResponse();
   }
 }
@@ -93,7 +94,7 @@ async function userDataLoader({ params }) {
  *
  * @component
  * @memberof module:App
- * @returns {JSX.Element} Le routeur de l'application.
+ * @returns {JSX.Element} Le routeur configuré de l'application.
  */
 function App() {
   return <RouterProvider router={router} />;

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: services/apiService.mjs</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: services/apiService.mjs</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @file apiService.mjs
+ * @module apiService
+ * @description Fournit une classe de service pour interagir avec l'API REST.
+ * Ce service gère les appels fetch vers les différents endpoints pour récupérer les données utilisateur.
+ */
+
+const API_BASE_URL = "http://localhost:3000";
+
+/**
+ * Classe représentant le service API.
+ *
+ * @class ApiService
+ * @memberof module:apiService
+ */
+class ApiService {
+  /**
+   * Crée une instance de ApiService.
+   *
+   * @param {string} [baseUrl=API_BASE_URL] - L'URL de base pour les requêtes API.
+   */
+  constructor(baseUrl = API_BASE_URL) {
+    this.baseUrl = baseUrl;
+  }
+
+  /**
+   * Effectue une requête HTTP vers un endpoint spécifique de l'API.
+   *
+   * Construit l'URL complète en combinant l'URL de base et l'endpoint fourni, puis effectue
+   * la requête en utilisant la fonction fetch. En cas d'erreur HTTP, une erreur est lancée.
+   *
+   * @async
+   * @param {string} endpoint - Le chemin de l'endpoint à appeler (doit commencer par '/').
+   * @returns {Promise&lt;any>} Les données JSON retournées par l'API.
+   * @throws {Error} Lance une erreur si la requête échoue (statut HTTP non OK).
+   */
+  async fetchEndpoint(endpoint) {
+    const url = `${this.baseUrl}${endpoint}`;
+    const response = await fetch(url);
+    if (!response.ok) {
+      console.error(`Request to ${url} failed with status ${response.status}`);
+      throw new Error(`Request failed with status ${response.status}`);
+    }
+    return response.json();
+  }
+
+  /**
+   * Récupère les informations de base d'un utilisateur.
+   *
+   * @param {string} userId - L'identifiant de l'utilisateur.
+   * @returns {Promise&lt;any>} Les données de l'utilisateur.
+   */
+  getUser(userId) {
+    return this.fetchEndpoint(`/user/${userId}`);
+  }
+
+  /**
+   * Récupère les données d'activité d'un utilisateur.
+   *
+   * @param {string} userId - L'identifiant de l'utilisateur.
+   * @returns {Promise&lt;any>} Les données d'activité de l'utilisateur.
+   */
+  getActivity(userId) {
+    return this.fetchEndpoint(`/user/${userId}/activity`);
+  }
+
+  /**
+   * Récupère les sessions moyennes d'un utilisateur.
+   *
+   * @param {string} userId - L'identifiant de l'utilisateur.
+   * @returns {Promise&lt;any>} Les données des sessions moyennes de l'utilisateur.
+   */
+  getAverageSessions(userId) {
+    return this.fetchEndpoint(`/user/${userId}/average-sessions`);
+  }
+
+  /**
+   * Récupère les performances d'un utilisateur.
+   *
+   * @param {string} userId - L'identifiant de l'utilisateur.
+   * @returns {Promise&lt;any>} Les données de performance de l'utilisateur.
+   */
+  getPerformance(userId) {
+    return this.fetchEndpoint(`/user/${userId}/performance`);
+  }
+}
+
+export default ApiService;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-App.html">App</a></li><li><a href="module-CaloriesCounter.html">CaloriesCounter</a></li><li><a href="module-CarbohydratesCounter.html">CarbohydratesCounter</a></li><li><a href="module-DailyActivityChart.html">DailyActivityChart</a></li><li><a href="module-Error.html">Error</a></li><li><a href="module-Home.html">Home</a></li><li><a href="module-IconCalories.html">IconCalories</a></li><li><a href="module-IconCarbohydrates.html">IconCarbohydrates</a></li><li><a href="module-IconCycling.html">IconCycling</a></li><li><a href="module-IconLipids.html">IconLipids</a></li><li><a href="module-IconMeditating.html">IconMeditating</a></li><li><a href="module-IconProteins.html">IconProteins</a></li><li><a href="module-IconSwimming.html">IconSwimming</a></li><li><a href="module-IconWeightlifting.html">IconWeightlifting</a></li><li><a href="module-LipidsCounter.html">LipidsCounter</a></li><li><a href="module-MainAside.html">MainAside</a></li><li><a href="module-MainHeader.html">MainHeader</a></li><li><a href="module-ProteinsCounter.html">ProteinsCounter</a></li><li><a href="module-RadarPerformanceChart.html">RadarPerformanceChart</a></li><li><a href="module-Root.html">Root</a></li><li><a href="module-ScoreChart.html">ScoreChart</a></li><li><a href="module-SessionDurationChart.html">SessionDurationChart</a></li><li><a href="module-SiteLogo.html">SiteLogo</a></li><li><a href="module-SvgIcon.html">SvgIcon</a></li><li><a href="module-UserDataModel.html">UserDataModel</a></li><li><a href="module-apiService.html">apiService</a></li><li><a href="module-httpResponses.html">httpResponses</a></li><li><a href="module-index.html">index</a></li></ul><h3>Classes</h3><ul><li><a href="module-UserDataModel.UserDataModel.html">UserDataModel</a></li><li><a href="module-UserDataModel-UserDataModel.html">UserDataModel</a></li><li><a href="module-apiService.ApiService.html">ApiService</a></li><li><a href="module-apiService-ApiService.html">ApiService</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Tue Mar 18 2025 11:39:10 GMT+0100 (Central European Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

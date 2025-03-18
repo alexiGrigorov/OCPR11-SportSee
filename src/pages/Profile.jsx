@@ -29,7 +29,7 @@ function Profile() {
         />
 
         <SessionDurationChart
-          data={userData.avarageSessions}
+          data={userData.averageSessions}
           className="area-avarage-sessions"
         />
 

@@ -5,14 +5,14 @@
  */
 
 /**
- * Lève une réponse HTTP de type 404.
+ * Lève une réponse HTTP indiquant que la page demandée n'a pas été trouvée.
  *
- * Cette fonction lance une instance de {@link Response} indiquant que la page demandée n'a pas été trouvée.
- * Elle est utilisée notamment dans les loaders pour signaler une erreur "Not Found".
+ * Cette fonction lance une instance de {@link Response} avec le message "Page Not Found", le status 404 et le statusText "Not Found".
+ * Elle est utilisée notamment dans les loaders pour signaler qu'aucune ressource correspondante n'a été trouvée.
  *
  * @function throwNotFoundResponse
  * @memberof module:httpResponses
- * @throws {Response} Une réponse HTTP avec le message "Page Not Found", le status 404 et le statusText "Not Found".
+ * @throws {Response} Une instance de {@link Response} indiquant l'erreur 404.
  */
 function throwNotFoundResponse() {
   throw new Response("Page Not Found", {

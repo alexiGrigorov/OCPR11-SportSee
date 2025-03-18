@@ -1,3 +1,11 @@
+/**
+ * @file ScoreChart.jsx
+ * @module ScoreChart
+ * @description Composant de graphique radial pour afficher le score de l'utilisateur.
+ * Ce graphique représente le score sous forme de pourcentage, en remplissant une barre radiale du haut vers le bas en sens antihoraire.
+ * Au centre, le pourcentage ainsi qu'un sous-titre sont affichés pour indiquer l'atteinte de l'objectif.
+ */
+
 import React from "react";
 import {
   RadialBarChart,
@@ -5,10 +13,22 @@ import {
   PolarAngleAxis,
   ResponsiveContainer,
   Legend,
-  Pie,
 } from "recharts";
 
-// Custom label component to render text in the center of the chart
+/**
+ * Composant d'étiquette personnalisée pour le graphique radial.
+ *
+ * Affiche le pourcentage sous forme d'entier et un sous-titre indiquant "de votre objectif".
+ *
+ * @component
+ * @memberof module:ScoreChart
+ * @param {Object} props - Les propriétés de l'étiquette.
+ * @param {number} props.cx - Coordonnée X du centre du graphique.
+ * @param {number} props.cy - Coordonnée Y du centre du graphique.
+ * @param {number} props.value - La valeur (pourcentage) à afficher.
+ * @param {Object} [props.viewBox] - L'objet viewBox contenant notamment l'innerRadius du graphique.
+ * @returns {JSX.Element} Le rendu de l'étiquette personnalisée.
+ */
 const CustomLabel = ({ cx, cy, value, viewBox }) => {
   const intValue = Math.round(value);
   const computedInnerRadius = viewBox?.innerRadius;
@@ -43,20 +63,39 @@ const CustomLabel = ({ cx, cy, value, viewBox }) => {
   );
 };
 
+/**
+ * Composant de légende personnalisé pour le graphique de score.
+ *
+ * Affiche le titre "Score" en haut du graphique.
+ *
+ * @component
+ * @memberof module:ScoreChart
+ * @returns {JSX.Element} Le rendu de la légende personnalisée.
+ */
 const CustomLegend = () => {
   return <h3 className="text-base font-medium">Score</h3>;
 };
 
 /**
- * A radial score chart that fills from the top in a counterclockwise direction.
- * Displays a percentage and a subtitle in the center.
+ * Composant ScoreChart.
  *
- * @param {number} data - A number between 0 and 1 representing the fraction filled (e.g., 0.12 for 12%).
+ * Affiche un graphique radial de type RadialBarChart représentant le score de l'utilisateur.
+ * Le score est fourni sous forme de fraction (entre 0 et 1) et est converti en pourcentage pour l'affichage.
+ * Le graphique se remplit de manière antihoraire en partant du haut (90°) et se termine à 450°.
+ *
+ * @component
+ * @memberof module:ScoreChart
+ * @param {Object} props - Les propriétés du composant.
+ * @param {number} props.data - Une valeur numérique entre 0 et 1 représentant le score (par exemple, 0.12 pour 12%).
+ * @param {string} [props.className=""] - Classes CSS supplémentaires à appliquer au conteneur du graphique.
+ * @param {Object} [props.rest] - Autres propriétés HTML à appliquer au conteneur.
+ * @returns {JSX.Element} Le rendu du graphique radial de score.
  */
 function ScoreChart({ data, className, ...props }) {
-  const dataValue = data * 100; // Convert 0.12 => 12
+  // Convertir la fraction en pourcentage
+  const dataValue = data * 100;
   const score = [
-    { name: "Score", value: dataValue, fill: "#FF0000" }, // red arc
+    { name: "Score", value: dataValue, fill: "#FF0000" }, // Arc en rouge pour le score
   ];
 
   return (
@@ -72,12 +111,11 @@ function ScoreChart({ data, className, ...props }) {
           outerRadius="100%"
           barSize={10}
           startAngle={90}
-          endAngle={450} // fill counterclockwise from top
+          endAngle={450} // Remplissage en sens antihoraire depuis le haut
           data={score}
         >
           <Legend verticalAlign="top" height={50} content={<CustomLegend />} />
           <PolarAngleAxis type="number" domain={[0, 100]} tick={false} />
-
           <RadialBar
             minAngle={15}
             dataKey="value"
