@@ -40,17 +40,18 @@ const RadarPerformanceChart = ({ data, className, ...props }) => {
 
   return (
     <div
-      className={`${className} aspect-square rounded-sm bg-neutral-800 p-8`}
+      className={`${className} aspect-square rounded-sm bg-neutral-800 p-2`}
       {...props}
     >
-      <ResponsiveContainer>
-        <RadarChart data={preparedData} outerRadius="70%">
+      <ResponsiveContainer width={"100%"} height={"100%"}>
+        <RadarChart data={preparedData} outerRadius={60}>
           <PolarGrid stroke="#FFFFFF" radialLines={false} />
           <PolarAngleAxis
             dataKey="subject"
             stroke="#FFFFFF"
             tickLine={false}
             axisLine={false}
+            tickMargin={1000}
           />
           <PolarRadiusAxis
             domain={[0, maxValue]}

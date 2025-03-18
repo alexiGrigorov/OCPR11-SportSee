@@ -2,8 +2,8 @@ import { Link } from "react-router-dom";
 
 function Home() {
   return (
-    <main className="area-main px-27 py-17">
-      <h1 className="my-10 text-5xl font-medium">Accueil</h1>
+    <main className="area-main py-10 ps-15">
+      <h1 className="mb-8 text-5xl font-medium">Accueil</h1>
       <p className="text-lg">
         Pour un exemple avec des données dynamiques, consultez les sites pages{" "}
         <Link className="text-primary" to={"/user/12"}>

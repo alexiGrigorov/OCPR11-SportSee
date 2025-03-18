@@ -52,10 +52,15 @@
   }
 
   .layout-indicators {
+    --max-square-size: 280px;
+
+    max-width: calc(var(--max-square-size) * 4);
     grid-template:
-      "daily-activity daily-activity daily-activity counters" 1fr
-      "avarage-sessions performance today-score counters" 1fr
-      / 1fr 1fr 1fr 1fr;
+      "daily-activity daily-activity daily-activity counters"
+      "avarage-sessions performance today-score counters";
+
+    grid-template-columns: repeat(4, minmax(1fr, var(--max-square-size)));
+    grid-template-rows: repeat(2, minmax(1fr, var(--max-square-size)));
   }
 
   .area-daily-activity {

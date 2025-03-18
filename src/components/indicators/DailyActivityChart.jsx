@@ -16,7 +16,7 @@ const CustomTooltip = ({ active, payload, coordinate }) => {
     const kcal = payload[1].value;
     return (
       <div
-        className="bg-primary text-medium pointer-events-none absolute flex flex-col items-center gap-3.5 p-2 text-xs text-white"
+        className="bg-primary pointer-events-none absolute flex flex-col items-center gap-3.5 p-2 text-xs font-medium text-white"
         style={{
           left: coordinate.x + 20,
           top: coordinate.y - 50,
@@ -35,7 +35,7 @@ const CustomLegend = ({ payload }) => {
 
   return (
     <div className="flex items-center justify-between">
-      <h3 className="text-medium text-base">Activité quotidienne</h3>
+      <h3 className="text-base font-medium">Activité quotidienne</h3>
 
       <div className="flex flex-row items-center gap-8">
         {payload?.map((entry, index) => (
@@ -80,7 +80,7 @@ function DailyActivityChart({ data, className, ...props }) {
 
   return (
     <div
-      className={`${className} aspect-3/1 rounded-sm bg-neutral-50 p-8`}
+      className={`${className} aspect-3/1 rounded-sm bg-neutral-50 p-4`}
       {...props}
     >
       <ResponsiveContainer width="100%">

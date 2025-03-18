@@ -39,7 +39,7 @@ const CustomTooltip = ({ active, payload, coordinate }) => {
     return (
       <div>
         <div
-          className="text-medium pointer-events-none absolute bg-white p-2 text-xs whitespace-nowrap"
+          className="pointer-events-none absolute bg-white p-2 text-xs font-medium whitespace-nowrap"
           style={{
             left: coordinate.x + 15,
             top: coordinate.y - 15,
@@ -55,7 +55,7 @@ const CustomTooltip = ({ active, payload, coordinate }) => {
 
 const CustomLegend = ({ payload }) => {
   return (
-    <h3 className="text-medium text-base text-white opacity-50">
+    <h3 className="text-base font-medium text-white opacity-50">
       Durée moyenne des <br /> sessions
     </h3>
   );
@@ -64,7 +64,7 @@ const CustomLegend = ({ payload }) => {
 const SessionDurationChart = ({ data, className, ...props }) => {
   return (
     <div
-      className={`${className} bg-primary aspect-square rounded-sm p-8`}
+      className={`${className} bg-primary aspect-square rounded-sm p-4`}
       {...props}
     >
       <ResponsiveContainer>

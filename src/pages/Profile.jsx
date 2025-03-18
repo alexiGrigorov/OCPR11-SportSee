@@ -14,11 +14,11 @@ function Profile() {
   console.log(userData);
 
   return (
-    <main className="area-main px-27 py-17">
-      <h1 className="my-10 text-5xl font-medium">
+    <main className="area-main px-15 py-10">
+      <h1 className="mb-8 text-5xl font-medium">
         Bonjour <span className="text-primary">{userData.user.firstName}</span>
       </h1>
-      <p className="mb-19 text-lg">
+      <p className="mb-10 text-lg">
         Félicitation ! Vous avez explosé vos objectifs hier 👏
       </p>
 

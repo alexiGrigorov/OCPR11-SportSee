@@ -1,9 +1,9 @@
 import IconCalories from "../icons/IconCalories";
 
-function CaloriesCounter({ value, className, ...props }) {
+function CaloriesCounter({ value, className = "", ...props }) {
   return (
     <div
-      className={`${className} flex items-center gap-6 rounded-sm bg-neutral-50 p-8`}
+      className={`${className} flex flex-shrink-0 items-center gap-6 rounded-sm bg-neutral-50 p-4`}
       {...props}
     >
       <IconCalories />

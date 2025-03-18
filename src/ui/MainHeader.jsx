@@ -4,9 +4,9 @@ import SiteLogo from "../components/SiteLogo";
 
 function MainHeader() {
   return (
-    <header className="area-header full-width bg-black py-4 ps-7 pe-18 text-white drop-shadow-lg">
+    <header className="area-header full-width bg-black py-2 ps-5 pe-10 text-white drop-shadow-lg">
       <nav>
-        <menu className="flex flex-row items-center justify-between text-2xl font-medium">
+        <menu className="flex flex-row items-center justify-between text-xl font-medium">
           <li>
             <Link to="/">
               <SiteLogo />

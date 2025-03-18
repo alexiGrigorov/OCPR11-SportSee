@@ -5,7 +5,7 @@ import IconWeightlifting from "../components/icons/IconWeightlifting";
 
 function MainAside() {
   return (
-    <aside className="area-aside flex flex-col items-center justify-end bg-black px-6.5 py-15 drop-shadow-lg">
+    <aside className="area-aside flex flex-col items-center justify-end bg-black px-4.5 pb-10 drop-shadow-lg">
       <div className="my-auto flex flex-col gap-5">
         <IconMeditating />
         <IconSwimming />

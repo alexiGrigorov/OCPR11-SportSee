@@ -1,9 +1,9 @@
 import IconCarbohydrates from "../icons/IconCarbohydrates";
 
-function CaloriesCounter({ value, className, ...props }) {
+function CaloriesCounter({ value, className = "", ...props }) {
   return (
     <div
-      className={`${className} flex items-center gap-6 rounded-sm bg-neutral-50 p-8`}
+      className={`${className} flex items-center gap-6 rounded-sm bg-neutral-50 p-4`}
       {...props}
     >
       <IconCarbohydrates />
