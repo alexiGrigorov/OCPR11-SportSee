@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: utils/httpResponses.mjs</title>
+    <title>JSDoc: Module: mockApiService</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,42 +17,142 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: utils/httpResponses.mjs</h1>
+    <h1 class="page-title">Module: mockApiService</h1>
 
     
 
 
 
+
+<section>
+
+<header>
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>/**
- * @file httpResponses.mjs
- * @module httpResponses
- * @description Définit les fonctions utilitaires pour renvoyer des réponses HTTP d'erreur.
- */
+        
+            
+        
+    
+</header>
 
-/**
- * Lève une réponse HTTP indiquant que la page demandée n'a pas été trouvée.
- *
- * Cette fonction lance une instance de {@link Response} avec le message "Page Not Found", le status 404 et le statusText "Not Found".
- * Elle est utilisée notamment dans les loaders pour signaler qu'aucune ressource correspondante n'a été trouvée.
- *
- * @function throwNotFoundResponse
- * @memberof module:httpResponses
- * @throws {Response} Une instance de {@link Response} indiquant l'erreur 404.
- */
-function throwNotFoundResponse() {
-  throw new Response("Page Not Found", {
-    status: 404,
-    statusText: "Not Found",
-  });
-}
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">Fournit une classe de service pour simuler les appels à l'API REST avec des données mock.Cette classe retourne automatiquement des données statiques.</div>
+        
 
-export { throwNotFoundResponse };
-</code></pre>
-        </article>
-    </section>
+        
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="services_mockApiService.mjs.html">services/mockApiService.mjs</a>, <a href="services_mockApiService.mjs.html#line1">line 1</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Classes</h3>
+
+        <dl>
+            <dt><a href="module-mockApiService.MockApiService.html">MockApiService</a></dt>
+            <dd></dd>
+        
+            <dt><a href="module-mockApiService-MockApiService.html">MockApiService</a></dt>
+            <dd></dd>
+        </dl>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 

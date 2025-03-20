@@ -8,6 +8,7 @@
 
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 
+// import mockApiService from "./services/mockApiService.mjs";
 import ApiService from "./services/apiService.mjs";
 import { throwNotFoundResponse } from "./utils/httpResponses.mjs";
 import UserDataModel from "./models/UserDataModel.mjs";
@@ -68,6 +69,7 @@ const router = createBrowserRouter(
  */
 async function userDataLoader({ params }) {
   const userId = params.id;
+  // const apiService = new mockApiService();
   const apiService = new ApiService();
 
   try {
